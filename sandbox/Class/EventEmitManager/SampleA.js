@@ -2,6 +2,7 @@ function SampleA(){
 	this.flag = false;
 	this.flagOn = function (){
 		this.flag = true;
+		// FIXME いちいちチェックタイミングを呼び出さないといけないのかなーーー
 		this.eem.checkEmit();
 	}
 	/** EventEmitManagerInterface */

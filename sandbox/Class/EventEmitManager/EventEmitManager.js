@@ -8,6 +8,7 @@ function EventEmitManager(emitter, instances){
 		this.instances[x].eem = this;
 	}
 
+	// FIXME EventEmitterのkeyが同じだとおかしくなると思うので検討する必要あり
 	var ev = new EventEmitter;
 	ev.on('emitter', function () {
 		emitter.doEmit();
