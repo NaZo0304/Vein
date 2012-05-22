@@ -26,6 +26,6 @@ function EventEmitManager(emitter, instances){
 		} else {
 			console.log("none call emitter..");
 		}
-	}
+	};
 }
 module.exports = EventEmitManager;
