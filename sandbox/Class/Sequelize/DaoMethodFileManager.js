@@ -1,4 +1,4 @@
-function DaoMethodFileManager(){
+function DaoMethodFileManager(tableName){
 	this.tableName = null;
 	this.columns = [];
 	this.foreignKeys = [];
@@ -8,6 +8,6 @@ function DaoMethodFileManager(){
 	};
 	this.addForeignKey = function (parentTableName, childTableName, type){
 		this.foreignKeys[this.foreignKeys] = {"parentTableName" : parentTableName, "childTableName" : childTableName, "type" : type};
-	}
+	};
 }
 module.exports = DaoMethodFileManager;
