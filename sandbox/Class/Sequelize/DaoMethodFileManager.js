@@ -1,32 +1,44 @@
 var EventEmitter =  require('events').EventEmitter;
-module.exports = (function(sequelize, databaseName, tableName) {
+module.exports = (function() {
 	var DaoMethodFileManager = function (sequelize, databaseName, tableName){
+
 		this.databaseName = databaseName;
 		this.tableName = tableName;
-		this.execShowColumnsFlag = false;
 		this.execGetForeignKeysFlag = false;
+		this.execShowColumnsFlag = false;
 		this.evm = new EventEmitter();
-		this.evm.on('stream', output);
+		this.evm.on('stream', this.output);
+	};
+	DaoMethodFileManager.prototype.build = function () {
+		console.log("success" + this.tableName);
+	};
+	DaoMethodFileManager.prototype.failure = function () {
+		console.log("failure" + this.tableName);
 	};
 	DaoMethodFileManager.prototype.execShowColumns = function () {
-		sequelize.query("SHOW COLUMNS FROM " + tableName, null, {raw: true, sync:true})
+		execGetForeignKeysFlag = false;
+		sequelize.query("SHOW COLUMNS FROM " + this.tableName, this, {raw: false, sync:true})
 		.success(function (rows) {
+			console.log(this);
 			columns = rows;
 			this.execShowColumsFlag = true;
-			this.doEmit();
+			//this.doEmit();
 		});
 	};
 	DaoMethodFileManager.prototype.execGetForeignKeys = function () {
 		sequelize.query("SELECT * FROM information_schema.TABLE_CONSTRAINTS as tc INNER JOIN information_schema.KEY_COLUMN_USAGE as kcu ON tc.CONSTRAINT_NAME = kcu.CONSTRAINT_NAME " +
 				"WHERE kcu.TABLE_SCHEMA = '"+databaseName+"' AND kcu.TABLE_NAME = '"+tableName+"' " +
-				"AND tc.CONSTRAINT_TYPE LIKE 'foreign key'", null, {raw: true, sync:true})
-		.success(function(rows) {
+				"AND tc.CONSTRAINT_TYPE LIKE 'foreign key'", null, {raw: false, sync:false})
+		.success(function(rows,a) {
 				foreignKeys = rows;
-				this.execGetForeignKeysFlag = true;
-				this.doEmit();
+				console.log(this.execGetForeignKeysFlag);
+				execGetForeignKeysFlag = true;
+				console.log(this.execGetForeignKeysFlag);
+			//	this.doEmit();
 		});
 	};
 	DaoMethodFileManager.prototype.doEmit = function () {
+		console.log(this.execShowColumnsFlag +":"+ this.execGetForeignKeysFlag);
 		if (this.execShowColumnsFlag && this.execGetForeignKeysFlag) {
 			console.log("asdasda");
 			evm.emit("stream",arg);
@@ -38,8 +50,5 @@ module.exports = (function(sequelize, databaseName, tableName) {
 		console.log("emittererere");
 	};
 
-	DaoMethodFileManager.prototype.execShowColumns();
-	DaoMethodFileManager.prototype.execGetForeignKeys();
-
 	return DaoMethodFileManager;
-});
+})();

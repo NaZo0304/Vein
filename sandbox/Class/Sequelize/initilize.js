@@ -11,23 +11,26 @@
 4. file output
 　形式は写真参照
  */
-var DATABASE_NAME = "database_script_dev";
+var DATABASE_NAME = "vein_develop";
 var EventEmitter =  require('events').EventEmitter;
 var Sequelize = require("sequelize");
-sequelize = new Sequelize(DATABASE_NAME, 'root', 'masato@123', {
+sequelize = new Sequelize(DATABASE_NAME, 'root', '', {
 	dialect: 'mysql',
 	host : "localhost",
 	port : 3306
 });
 
 var DaoMethodFileManager = require("./DaoMethodFileManager");
-
 tables = [];
 
 // FIX ME : クエリージェネレーションってどう使うの！！ふぁあああ
 sequelize.query("SHOW TABLES", null, {raw: true, sync:true}).on("success", execShowTables);
 function execShowTables(rows) {
 	rows.forEach(function(row){
-		tables[tables.length] = new DaoMethodFileManager(sequelize, DATABASE_NAME, row);
+		dmfm = new DaoMethodFileManager(sequelize, DATABASE_NAME, row);
+		tables[tables.length] = dmfm;
+		dmfm.execShowColumns();
+		dmfm.doEmit();
+//		tables[tables.length].execGetForeignKeys();
 	});
 }
