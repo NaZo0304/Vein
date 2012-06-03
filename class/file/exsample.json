@@ -1,0 +1,29 @@
+{
+	"entity" : "shops",
+	"join" : [
+		{
+			"entity" : "products",
+			"key" : { "shops.id" : "products.shop_id" },
+			"type" : "inner"
+		}
+	]
+	,
+	"field" : {
+		"shops.id" : "int",
+		"shops.name" : "string",
+		"shops.createdAt" : "datetime",
+		"shops.updatedAt" : "datetime",
+		"shops.deletedAt" : "datetime",
+		"products.id" : "int",
+		"products.shop_id" : "int",
+		"products.name" : "string",
+		"products.price" : "int",
+		"products.createdAt" : "datetime",
+		"products.updatedAt" : "datetime",
+		"products.deletedAt" : "datetime"
+	},
+	"key" : { "shops.id" : 1, "products.name" : "pecos" },
+	"count" : 10,
+	"offset" : 0,
+	"order" : { "shops.id" : "desc" }
+}
