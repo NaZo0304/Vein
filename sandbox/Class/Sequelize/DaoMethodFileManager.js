@@ -17,13 +17,14 @@ module.exports = (function(sequelize, databaseName, tableName) {
 		});
 	};
 	DaoMethodFileManager.prototype.execGetForeignKeys = function () {
+		var ref = this;
 		sequelize.query("SELECT * FROM information_schema.TABLE_CONSTRAINTS as tc INNER JOIN information_schema.KEY_COLUMN_USAGE as kcu ON tc.CONSTRAINT_NAME = kcu.CONSTRAINT_NAME " +
 				"WHERE kcu.TABLE_SCHEMA = '"+databaseName+"' AND kcu.TABLE_NAME = '"+tableName+"' " +
 				"AND tc.CONSTRAINT_TYPE LIKE 'foreign key'", null, {raw: true, sync:true})
 		.success(function(rows) {
-				foreignKeys = rows;
-				this.execGetForeignKeysFlag = true;
-				this.doEmit();
+				ref.foreignKeys = rows;
+				ref.execGetForeignKeysFlag = true;
+				ref.doEmit();
 		});
 	};
 	DaoMethodFileManager.prototype.doEmit = function () {

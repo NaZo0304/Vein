@@ -1,6 +1,6 @@
 var EventEmitter = require('events').EventEmitter;
 
-function EventEmitManager(emitter, instances){
+function EventEmitManager(emitter, instances, param){
 	console.log("constructor EventEmitManager");
 	this.emitter = emitter;
 	this.instances = instances;
@@ -8,11 +8,15 @@ function EventEmitManager(emitter, instances){
 		this.instances[x].eem = this;
 	}
 
+	this.param = param;
 	// FIXME EventEmitterのkeyが同じだとおかしくなると思うので検討する必要あり
+	this.emitFunc = function () {
+		console.log(param);
+		this.emitter.param = this.param;
+		this.emitter.doEmit();
+	};
 	var ev = new EventEmitter;
-	ev.on('emitter', function () {
-		emitter.doEmit();
-	});
+	ev.on('emitter', this.emitFunc);
 
 	this.checkEmit = function () {
 		var flag = true;

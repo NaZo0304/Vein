@@ -21,7 +21,9 @@ sequelize = new Sequelize(DATABASE_NAME, 'root', 'masato@123', {
 });
 
 var DaoMethodFileManager = require("./DaoMethodFileManager");
+var DaoMethodFileCreator = require("./DaoMethodFileCreator");
 
+DaoMethodFileCreator.getInstance();
 tables = [];
 
 // FIX ME : クエリージェネレーションってどう使うの！！ふぁあああ

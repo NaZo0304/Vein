@@ -13,7 +13,7 @@ var sampleD = new SampleD();
  * sampleA / sampleB / sampleC の全てのフラグがONになった時、sampleDのdoEmitを実行する
  * I/FとしてEventEmitManagerは 発火条件methodのcheckEmitを呼び出す。全ての条件がtrueだったとき発火method doEmitを実行する。
  */
-var eem = new EventEmitManager(sampleD, new Array(sampleA, sampleB, sampleC));
+var eem = new EventEmitManager(sampleD, new Array(sampleA, sampleB, sampleC), {"message" : "うひょ"});
 sampleA.flagOn();
 sampleB.flagOn();
 sampleC.flagOn();
